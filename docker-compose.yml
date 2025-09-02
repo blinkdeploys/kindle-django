@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${HOST_PORT:-8000}:8000"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+      - ./:/app:delegated
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "60", "1"]
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    command: ["celery", "-A", "project", "worker", "--loglevel=info"]
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./:/app:delegated
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
