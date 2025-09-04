@@ -45,11 +45,28 @@ if ! ls -la | grep -q ' manage.py'; then
   # run the development server
   python manage.py migrate
 
+  # staticfiles modes
+  if ! ls -la | grep -q ' staticfiles'; then
+    mkdir ./staticfiles
+  else
+    chmod -R 755 ./staticfiles
+  fi
+  # edit the settings file
+  # ...
+
+  # celery mods
+  # ...
+
+
+
 else
 
   echo "\nApp $projectname already exists."
 
 fi
+
+
+
 
 #***************** 
 

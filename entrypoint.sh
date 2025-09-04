@@ -13,8 +13,8 @@ echo "Waiting for Postgres at ${POSTGRES_HOST}:${POSTGRES_PORT}..."
 python - <<PY
 import os,sys, time
 import socket
-host = os.getenv('POSTGRES_HOST','db')
-port = int(os.getenv('POSTGRES_PORT','5432'))
+host = os.getenv('POSTGRES_HOST','${POSTGRES_DB}')
+port = int(os.getenv('POSTGRES_PORT','${POSTGRES_PORT}'))
 for i in range(60):
     try:
         s = socket.create_connection((host, port), 2)
@@ -54,7 +54,7 @@ fi
 
 # Start server
 echo "Starting gunicorn..."
-exec gunicorn project.wsgi:application \
+exec gunicorn ${PROJECTNAME}.wsgi:application \
     --bind 0.0.0.0:8000 \
     --workers 3 \
     --log-level info
