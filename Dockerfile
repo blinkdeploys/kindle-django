@@ -22,21 +22,24 @@ COPY ./requirements.txt $APP_HOME/requirements.txt
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install -r requirements.txt
 
-# init project files
-RUN sh django-install.sh
-
 # copy project
 COPY . $APP_HOME
 
 # make entrypoint executable
 RUN chmod +x /app/entrypoint.sh
 RUN chmod +x /app/wait-for-it.sh
+RUN mkdir -p /app/staticfiles && chmod -R 755 /app/staticfiles
+# If running as non-root user (recommended):
+RUN chown -R appuser:appuser /app/staticfiles
 
 # expose port used by gunicorn
 EXPOSE 8000
 
+ARG PROJECTNAME
+ENV PROJECTNAME=$PROJECTNAME
+
 # default env (can be overridden in docker-compose/.env)
-ENV DJANGO_SETTINGS_MODULE=project.settings
+# ENV DJANGO_SETTINGS_MODULE='$PROJECTNAME.settings'
 ENV PORT=8000
 
 USER appuser
