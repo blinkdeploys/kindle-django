@@ -4,18 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-    <title>Kindle Leads</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <title>Kindle Leads</title>
 </head>
 <body>
-    <section class="hero">
+    <section class="container hero">
         <div class="hero-body">
             <p class="title">SMB Leads - Kindle</p>
-            <p class="subtitle">Hero subtitle</p>
+            <p class="subtitle">Demonstration model</p>
         </div>
     </section>
     <section class="container is-widescreen">
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <!-- w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 -->
             <div class="table-container">
                 <table class="table is-striped">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -25,8 +24,11 @@
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Phone</th>
-                            <th>Website</th>
                             <th>Company</th>
+                            <th>Website</th>
+                            <th>
+                                <i class="fas fa-check-square"></i>
+                            </th>
                             <!-- <th>Created At</th> -->
                         </tr>
                     </thead>
@@ -37,8 +39,15 @@
                         <td>{{ client.last_name }}</td>
                         <td>{{ client.email }}</td>
                         <td>{{ client.phone }}</td>
-                        <td>{{ client.website }}</td>
                         <td>{{ client.company_name }}</td>
+                        <td><a href="{{ client.website }}" target="new">link <i class="fas fa-regular fa-external-link"></i></a></td>
+                        <td>
+                            <div class="icon-text">
+                                <span class="icon {% if client.is_active %}has-text-success{% endif %}">
+                                    <i class="fas {% if client.is_active %}fa-check-square{% else %}fa-square{% endif %}"></i>
+                                </span>
+                            </div>
+                        </td>
                         <!-- <td>{{ client.created_at }}</td> -->
                     </tr>
                     {% empty %}
