@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <title>Kindle Leads</title>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-body">
+            <p class="title">SMB Leads - Kindle</p>
+            <p class="subtitle">Hero subtitle</p>
+        </div>
+    </section>
+    <section class="container is-widescreen">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <!-- w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 -->
+            <div class="table-container">
+                <table class="table is-striped">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th>SN</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Website</th>
+                            <th>Company</th>
+                            <!-- <th>Created At</th> -->
+                        </tr>
+                    </thead>
+                    {% for client in leads %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ client.first_name }}</td>
+                        <td>{{ client.last_name }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.website }}</td>
+                        <td>{{ client.company_name }}</td>
+                        <!-- <td>{{ client.created_at }}</td> -->
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6">No leads found.</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
